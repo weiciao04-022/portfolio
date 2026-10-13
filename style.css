@@ -6,3 +6,5 @@
 @media(max-width:380px){.story-grid{grid-template-columns:1fr}.story-card h3{min-height:0}.hero-actions{gap:14px}.button{padding:11px 16px;gap:18px}.hero-actions .text-link{font-size:11px}.mini-ticket strong{font-size:15px}.mini-ticket>div:first-child{padding:15px 12px}.ticket-stub{padding:10px}.filters{gap:13px}.contact-links span{font-size:13px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 @media print{.header,.hero,.stories,.map-section,.history,.about,.resume,.contact,footer,dialog{display:none}body:after{content:'請開啟 PDF 履歷後列印，以取得完整的一頁 A4 履歷。';display:block;margin:30px}}
+
+button:disabled{cursor:default;opacity:.5}.book{min-height:178px;height:auto}.book span{font-size:12px;letter-spacing:2px}.shelf{height:220px}.book-note:empty{display:none}.hero-grid{min-height:520px}
