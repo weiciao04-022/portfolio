@@ -41,6 +41,20 @@ function featureReader() {
   </section>`).join('');
   return `<div class="feature-reader"><nav class="feature-montage" aria-label="專題照片索引">${montage}</nav><div class="feature-stories">${articles}</div></div>`;
 }
+let featureObserver;
+function stopFeatureReveal(){featureObserver?.disconnect()}
+function setupFeatureReveal(){
+  stopFeatureReveal();
+  if(current!=='bookshelf'||reducedMotion.matches||!('IntersectionObserver' in window))return;
+  featureObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('is-visible');featureObserver.unobserve(entry.target)}
+    });
+  },{root:dialog,rootMargin:'-64px 0px -4% 0px',threshold:0.08});
+  dialog.querySelectorAll('.feature-article').forEach(story=>{
+    story.classList.add('feature-reveal');featureObserver.observe(story);
+  });
+}
 function content(id) {
   if(id==='bookshelf') return featureReader();
   if(id==='laptop') return `<div class="computer"><div class="screen-bar"><span class="screen-light" aria-hidden="true"></span><span>Katy’s digital workspace</span></div>${projectTabs(portfolio.digital,'screen-page','數位敘事作品')}<div id="project-content">${projectPage(portfolio.digital[0],0,'screen-page')}</div><div class="screen-chin" aria-hidden="true">KATY’S ROOM</div></div>`;

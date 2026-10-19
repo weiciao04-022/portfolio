@@ -106,3 +106,30 @@ dialog[data-view=bookshelf] #close{padding:15px 28px;color:#28231e;background:#f
 .feature-description .read-link{font-size:12px;padding:7px 0;gap:20px;margin-top:5px}
 @media(max-width:700px){dialog[data-view=bookshelf]{width:calc(100% - 20px)}dialog[data-view=bookshelf] #close{padding:14px 20px}.feature-stories{padding:0 25px 45px}.feature-article{padding-top:38px;padding-bottom:30px}#page .feature-article h3{font-size:21px;margin-bottom:20px}.feature-body,.feature-article:nth-child(even) .feature-body{gap:22px}.word-top{top:48px;left:-20px}.feature-article:nth-child(even) .word-top{top:62px}.feature-word{font-size:60px}}
 @media(max-width:520px){.feature-body,.feature-article:nth-child(even) .feature-body{grid-template-columns:1fr;gap:20px}.feature-article:nth-child(even) figure,.feature-article:nth-child(even) .feature-description{grid-column:auto;grid-row:auto}.feature-article:nth-child(even) h3{text-align:left}.feature-word{font-size:53px}.word-bottom{bottom:15px}#page .feature-description>p{font-size:14px;line-height:2}}
+/* Full-screen feature reading with a gentle, staggered entrance per story. */
+dialog[data-view=bookshelf]{inset:0;margin:0;width:100vw;max-width:none;height:100dvh;max-height:none;border-radius:0;animation:none}
+dialog[data-view=bookshelf] #close{padding:17px max(24px,4vw);font-size:14px}
+.feature-reader{max-width:1440px;margin-inline:auto}
+.feature-stories{padding:0 clamp(26px,6vw,88px) 90px}
+.feature-article{padding-top:78px;padding-bottom:44px}
+#page .feature-article h3{font-size:clamp(26px,2.7vw,40px);line-height:1.5;margin-bottom:34px}
+#page .feature-description>p{font-size:clamp(17px,1.4vw,20px);line-height:2.05}
+.feature-body,.feature-article:nth-child(even) .feature-body{gap:clamp(26px,3.3vw,48px)}
+.feature-description .read-link{font-size:15px;margin-top:18px}
+.feature-word{font-size:clamp(68px,9.5vw,140px)}.word-top{top:94px}.feature-article:nth-child(even) .word-top{top:108px}
+.feature-reveal .feature-word,.feature-reveal h3,.feature-reveal figure,.feature-reveal .feature-description{transition:opacity .65s ease,transform .65s cubic-bezier(.22,.61,.36,1)}
+.feature-reveal .word-top{transition-delay:0ms}.feature-reveal .word-bottom{transition-delay:50ms}
+.feature-reveal h3{transition-delay:90ms}.feature-reveal figure{transition-delay:180ms}.feature-reveal .feature-description{transition-delay:270ms}
+.feature-reveal:not(.is-visible) .feature-word{opacity:0;transform:translate(-18px,8px)}
+.feature-reveal:not(.is-visible) h3{opacity:0;transform:translateY(22px)}
+.feature-reveal:not(.is-visible) figure{opacity:0;transform:translateX(-30px)}
+.feature-reveal:not(.is-visible) .feature-description{opacity:0;transform:translateX(24px)}
+.feature-reveal:nth-child(even):not(.is-visible) figure{transform:translateX(30px)}
+.feature-reveal:nth-child(even):not(.is-visible) .feature-description{transform:translateX(-24px)}
+@media(max-width:700px){.feature-stories{padding:0 26px 55px}.feature-article{padding-top:48px;padding-bottom:32px}#page .feature-article h3{font-size:26px;margin-bottom:25px}#page .feature-description>p{font-size:17px;line-height:2}.feature-word{font-size:76px}.word-top{top:62px}.feature-article:nth-child(even) .word-top{top:76px}}
+@media(prefers-reduced-motion:reduce){.feature-reveal .feature-word,.feature-reveal h3,.feature-reveal figure,.feature-reveal .feature-description{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* Keep the full-screen reader's top control free of decorative lines. */
+dialog[data-view=bookshelf] #close{border:0;background:#fff}
+dialog[data-view=bookshelf] #close:focus-visible{outline:none}
+dialog[data-view=bookshelf] #close:focus-visible span{outline:2px solid #777;outline-offset:5px;border-radius:2px}

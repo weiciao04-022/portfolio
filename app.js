@@ -60,12 +60,12 @@ async function openObject(id,button) {
   const [label,title]=titles[id];
   dialog.dataset.view=id;
   $('#page').innerHTML=`<p class="eyebrow">${label}</p><h2 id="page-title">${title}</h2>${content(id)}`;
-  setBusy(false);dialog.showModal();dialog.scrollTop=0;
+  setBusy(false);dialog.showModal();dialog.scrollTop=0;setupFeatureReveal();
   button.setAttribute('aria-expanded','true');
 }
 async function closeContent() {
   if(busy)return;
-  setBusy(true);dialog.close();
+  setBusy(true);stopFeatureReveal();dialog.close();
   if(clips[current]&&!reducedMotion.matches&&room.classList.contains('playing'))
     await play(clips[current][1],clips[current][2],'正在回到房間…');
   video.pause();still.src='assets/room/home.webp?v=quality-1080-1';room.classList.remove('playing');setBusy(false);
