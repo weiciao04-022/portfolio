@@ -8,7 +8,8 @@
   <title>Katy’s Room｜黃暐喬</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/room/home.webp">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=content-policy-1">
+  <link rel="stylesheet" href="content.css?v=content-policy-1">
 </head>
 <body>
   <header><a class="brand" href="./">Katy’s Room<span>黃暐喬的房間</span></a><p>每一件物品，都有我的一點故事。</p><button id="guide" aria-pressed="false">顯示物件名稱</button></header>
@@ -18,20 +19,21 @@
       <img id="still" src="assets/room/home.webp" alt="陽光灑入房間，桌上放著報紙、筆電與筆記本，矮櫃上有相框，床邊有書架和小提琴。" width="1920" height="1080" fetchpriority="high">
       <video id="tour" muted playsinline preload="none" aria-hidden="true"></video>
       <div id="objects">
-        <button class="object" data-object="cabinet" style="--x:37%;--y:32%" aria-label="打開矮櫃：學歷與經歷"><i></i><span>學歷與經歷</span></button>
-        <button class="object" data-object="bookshelf" style="--x:90%;--y:29%" aria-label="打開書架：關於我"><i></i><span>關於我</span></button>
-        <button class="object" data-object="newspaper" style="--x:14%;--y:65%" aria-label="打開報紙：新聞作品"><i></i><span>新聞作品</span></button>
-        <button class="object" data-object="laptop" style="--x:19%;--y:55%" aria-label="打開筆電：數位敘事"><i></i><span>數位敘事</span></button>
-        <button class="object" data-object="notebook" style="--x:8%;--y:67%" aria-label="打開筆記本：為什麼做新聞"><i></i><span>採訪筆記</span></button>
-        <button class="object" data-object="violin" style="--x:77%;--y:49%" aria-label="打開小提琴：生活與興趣"><i></i><span>生活與興趣</span></button>
-        <button class="object" data-object="phone" style="--x:24%;--y:50%" aria-label="打開電話：聯絡我"><i></i><span>聯絡我</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="cabinet" style="--x:37%;--y:32%" aria-label="打開矮櫃：學歷與經歷"><i></i><span>學歷與經歷</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="bookshelf" style="--x:90%;--y:29%" aria-label="打開書本：專題報導"><i></i><span>專題報導</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="newspaper" style="--x:14%;--y:65%" aria-label="打開雜誌：新聞採訪作品"><i></i><span>新聞作品</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="laptop" style="--x:19%;--y:55%" aria-label="打開筆電：數位敘事"><i></i><span>數位敘事</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="notebook" style="--x:8%;--y:67%" aria-label="打開筆記本：關於我"><i></i><span>關於我</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="violin" style="--x:77%;--y:49%" aria-label="打開小提琴：生活與興趣"><i></i><span>生活與興趣</span></button>
+        <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="phone" style="--x:24%;--y:50%" aria-label="打開電話：聯絡我"><i></i><span>聯絡我</span></button>
       </div>
       <p id="status" role="status" aria-live="polite"></p>
     </div>
   </main>
   <footer><span>黃暐喬 <b>Katy Huang</b></span><p>新聞採訪 · 數位敘事 · 生活的觀察者</p><button id="demo">播放房間導覽 <span aria-hidden="true">↗</span></button></footer>
   <dialog id="content" aria-labelledby="page-title"><button id="close" aria-label="關閉內容，回到房間">回到房間 <span aria-hidden="true">×</span></button><div id="page"></div></dialog>
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=content-policy-1"></script>
+  <script src="views.js?v=content-policy-1"></script>
+  <script src="app.js?v=content-policy-1"></script>
 </body>
 </html>

@@ -34,3 +34,28 @@ const skillGroups = [
  {title:'資料處理與視覺化 Data & Visualization',text:'Gephi（網絡分析與視覺化）'}
 ];
 const books = {"listen": {"title": "為什麼想做新聞？", "text": "在跑採訪的過程中，最讓我感激的一件事，是受訪者總願意向我分享自己的親身經歷。對受訪者而言，記者可能只是第一天見面的陌生人，但他們卻願意敞開心房，回答我的問題，甚至分享那些不曾輕易對外人訴說的故事。透過一次次的提問與傾聽，我得以在短暫的相遇中，與原本陌生的人建立深刻的理解。而每次採訪結束後，思考該如何說好一個故事，總是我最期待的環節。我覺得寫報導就像拼拼圖，將採訪中聽見的故事、實際查找的資料，以及現場觀察到的細節，一片片拼湊起來，讓原本零散、模糊的資訊，逐漸形成一幅清晰的圖像。然而，採訪得越多，我反而越覺得自己渺小。每認識一個人、聽見一段不同的人生經歷，就越發現自己原本認識的世界有多麼狹窄。也正因如此，我想成為記者。 我希望透過一次又一次的採訪與報導，不斷蒐集那些自己未曾理解的故事，像拼拼圖一樣，一片一片地拼湊出更遼闊的世界。"}, "create": {"title": "自我介紹", "text": "我是黃暐喬 Katy Huang，今年22歲，目前就讀國立政治大學新聞學系，並且雙主修數位內容學士學程。當時高中考大學時，一直被父母鼓勵進入科技業，他們認為是更有前景的行業，但是我一頭栽進政大傳播，想要證明：如果好好把內容做好，媒體在世界上總有站穩的地方。雙主修數位內容也是父母說著要和Computer Science有一些關係總是好的，但是在數位內容中，我反而開拓了自己內容產出的方法，例如運用互動裝置設計、3D建模等，可以讓敘事增加除了文字外的想像。於大學報專題時，很榮幸和前Yahoo奇摩總編李怡志教授學習，數位敘事的融媒體新聞產出，也感嘆當時高中想要逃離寫程式，卻也讓程式也融進新聞作品裡。"}, "life": {"title": "工作之外的興趣", "text": "在課業與工作之外，我喜歡和家人、朋友好好相聚。獨處時，我偶爾會拿起小提琴，暫時放下手邊待完成的任務，讓自己從忙碌的生活中抽離。最近也開始學習高爾夫球，透過練習觀察身體的動作與發力方式，逐漸了解如何運用自己的身體。夏天時，我喜歡游泳，讓全身都能徹底放鬆；到了冬天，則喜歡騎腳踏車通勤，也讓思緒自由延伸，從日常獲得新的靈感。"}};
+
+// 作品物件的內容資料。image 可填入本機圖片路徑；null 欄位會顯示「待更新」。
+const portfolio = {
+  features: stories.filter(s => s.type === 'feature').map((s, i) => ({
+    ...s, id: `feature-${i}`, tab: ['失智與工作', '女僕職場', '數位永生', '體態焦慮'][i] || '待更新',
+    summary: null, role: null, image: null,
+    url: `https://unews.nccu.edu.tw/unews/${s.slug}/`
+  })),
+  digital: [
+    {id:'dementia', tab:'失智症', title:'年輕失智也失去生活：未能實現的工作權',
+      url:'https://unews.nccu.edu.tw/unews/dementia-work-YOD-convergencemedia/', summary:null, role:null, image:null},
+    {id:'wang-fuk', tab:'宏福苑', title:null, url:null, summary:null, role:null, image:null},
+    {id:'body', tab:'體態焦慮', title:'當美被社群媒體形塑　Z世代的體態焦慮與自我追尋',
+      url:'https://unews.nccu.edu.tw/unews/social-genz-SPA/', summary:null, role:null, image:null}
+  ],
+  news: stories.filter(s => s.type === 'news').map(s => ({
+    ...s, media:'政大大學報', date:null, summary:null, role:null,
+    url:`https://unews.nccu.edu.tw/unews/${s.slug}/`
+  })),
+  contact: {email:'112405118@g.nccu.edu.tw', phone:'0909 070 707', phoneHref:'+886909070707'},
+  about: {
+    intro:books.create.text,
+    interests:null
+  }
+};

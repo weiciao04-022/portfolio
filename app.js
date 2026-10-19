@@ -2,21 +2,9 @@ const $ = s => document.querySelector(s);
 const room = $('#room'), video = $('#tour'), still = $('#still'), dialog = $('#content');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const clips = {cabinet:[121,192,252],bookshelf:[253,396,480],newspaper:[481,552,612],laptop:[613,684,744]};
-const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['A LITTLE ABOUT ME','翻開我的故事'],newspaper:['SELECTED REPORTING','我的新聞作品'],laptop:['DIGITAL STORYTELLING','用不同的方式說故事'],notebook:['NOTES FROM THE FIELD','為什麼想做新聞？'],violin:['AFTER HOURS','工作之外的我'],phone:['SAY HELLO','保持聯絡']};
+const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['FEATURE STORIES','我的專題報導'],newspaper:['SELECTED REPORTING','我的新聞作品'],laptop:['DIGITAL STORYTELLING','用不同的方式說故事'],notebook:['ABOUT ME','關於我'],violin:['AFTER HOURS','工作之外的我'],phone:['SAY HELLO','保持聯絡']};
 let current = null, busy = false, demoPlaying = false, returnFocus = null, cancelPlayback = () => {};
 const paragraphs = text => text.split(/(?<=。)\s+/).map(p=>`<p>${p}</p>`).join('');
-function storyList(type='all') {
-  return stories.filter(s=>type==='all'||s.type===type).map(s=>`<a class="story" href="https://unews.nccu.edu.tw/unews/${s.slug}/" target="_blank" rel="noopener"><h3>${s.title}</h3><small>政大大學報 · ${{feature:'專題報導',news:'新聞採訪',interactive:'數位敘事'}[s.type]}<span>閱讀作品 ↗</span></small></a>`).join('');
-}
-function content(id) {
-  if(id==='cabinet') return `<article><small>EDUCATION</small><h3>國立政治大學</h3><p>新聞學系 · 雙主修數位內容學士學程</p><time>2023.09 — 2027.06</time><details><summary>更早的學歷</summary><p>私立靜心高級中學｜2020.09–2023.06<br>私立復興實驗高級中學附設中學｜2017.09–2020.06<br>私立復興實驗高級中學附設小學｜2011.09–2017.06</p></details></article>${experiences.map(x=>`<article><time>${x.date}</time><h3>${x.org}</h3><p>${x.position}</p><p>${x.text}</p></article>`).join('')}`;
-  if(id==='bookshelf') return `<div class="tabs" aria-label="選一本書">${['create','listen','life'].map((key,i)=>[key,books[key]]).map(([key,b],i)=>`<button data-book="${key}" aria-pressed="${i===0}">${b.title}</button>`).join('')}</div><div id="book-text">${paragraphs(books.create.text)}</div>`;
-  if(id==='newspaper') return `<div class="tabs" aria-label="作品類別"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="feature" aria-pressed="false">專題</button><button data-filter="news" aria-pressed="false">新聞</button></div><div id="stories">${storyList()}</div>`;
-  if(id==='laptop') return `${storyList('interactive')}<h3>我的製作工具</h3>${skillGroups.map(s=>`<article><h3>${s.title}</h3><p>${s.text}</p></article>`).join('')}`;
-  if(id==='notebook') return paragraphs(books.listen.text);
-  if(id==='violin') return paragraphs(books.life.text);
-  return `<p>歡迎聊聊採訪、創作，或一個值得被說出來的故事。</p><a class="contact" href="mailto:katyhuang2004@gmail.com"><small>EMAIL</small>katyhuang2004@gmail.com ↗</a><a class="contact" href="mailto:112405118@g.nccu.edu.tw"><small>UNIVERSITY</small>112405118@g.nccu.edu.tw ↗</a><a class="contact" href="tel:+886909070707"><small>PHONE</small>0909 070 707 ↗</a>`;
-}
 function setBusy(value) { busy=value; document.body.classList.toggle('busy',value); $('#objects').inert=value; $('#demo').disabled=value&&!demoPlaying; }
 // One small video contains frames 1–800. Seek only to the clicked object's segment.
 function play(start,end) {
@@ -57,31 +45,36 @@ function play(start,end) {
     }
   });
 }
-async function openObject(id,button) {
+function openObject(id,button) {
   if(busy||dialog.open)return;
-  current=id;returnFocus=button;setBusy(true);
-  let animated=false;
-  if(clips[id]&&!reducedMotion.matches)animated=await play(clips[id][0],clips[id][1]);
-  if(!animated){room.classList.remove('playing');still.src=`assets/room/${clips[id]?id:'home'}.webp`}
+  current=id;returnFocus=button;
+  // 閱讀立即開啟；完整鏡頭留在房間導覽，避免每次點擊等待。
+  room.classList.remove('playing');
+  still.src=`assets/room/${clips[id]?id:'home'}.webp`;
   const [label,title]=titles[id];
+  dialog.dataset.view=id;
   $('#page').innerHTML=`<p class="eyebrow">${label}</p><h2 id="page-title">${title}</h2>${content(id)}`;
-  dialog.showModal();dialog.scrollTop=0;setBusy(false);
+  dialog.showModal();dialog.scrollTop=0;
+  button.setAttribute('aria-expanded','true');
 }
-async function closeContent() {
-  if(busy)return;
-  setBusy(true);dialog.close();
-  if(clips[current]&&!reducedMotion.matches&&room.classList.contains('playing'))await play(clips[current][1],clips[current][2]);
-  still.src='assets/room/home.webp';room.classList.remove('playing');setBusy(false);returnFocus?.focus();current=null;
+function closeContent() {
+  dialog.close();video.pause();still.src='assets/room/home.webp';room.classList.remove('playing');
+  returnFocus?.setAttribute('aria-expanded','false');returnFocus?.focus();current=null;
 }
 $('#objects').addEventListener('click',e=>{const b=e.target.closest('[data-object]');if(b)openObject(b.dataset.object,b)});
 $('#close').addEventListener('click',closeContent);
 dialog.addEventListener('cancel',e=>{e.preventDefault();closeContent()});
 dialog.addEventListener('click',e=>{
-  if(e.target===dialog&&e.offsetX<0){closeContent();return}
-  const b=e.target.closest('[data-book],[data-filter]');if(!b)return;
-  b.parentElement.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  if(b.dataset.book)$('#book-text').innerHTML=paragraphs(books[b.dataset.book].text);
-  else $('#stories').innerHTML=storyList(b.dataset.filter);
+  if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeContent()}
+  const tab=e.target.closest('[data-project]');if(tab)selectProject(tab);
+});
+dialog.addEventListener('keydown',e=>{
+  const tab=e.target.closest('[role=tab]');if(!tab)return;
+  const vertical=tab.parentElement.getAttribute('aria-orientation')==='vertical';
+  const next=vertical?'ArrowDown':'ArrowRight',previous=vertical?'ArrowUp':'ArrowLeft';
+  if(![next,previous,'Home','End'].includes(e.key))return;
+  e.preventDefault();const tabs=[...tab.parentElement.children],i=tabs.indexOf(tab);
+  selectProject(tabs[e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key===next?1:-1)+tabs.length)%tabs.length],true);
 });
 $('#guide').addEventListener('click',()=>{const show=room.classList.toggle('labels');$('#guide').setAttribute('aria-pressed',show);$('#guide').textContent=show?'隱藏物件名稱':'顯示物件名稱'});
 $('#demo').addEventListener('click',async()=>{
