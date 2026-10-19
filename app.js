@@ -9,7 +9,7 @@ const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['FEATURE STO
 let current = null, busy = false, demoPlaying = false, returnFocus = null, cancelPlayback = () => {};
 const paragraphs = text => text.split(/(?<=。)\s+/).map(p=>`<p>${p}</p>`).join('');
 function setBusy(value) { busy=value; document.body.classList.toggle('busy',value); $('#objects').inert=value; $('#demo').disabled=value&&!demoPlaying; $('#skip-animation').hidden=!value||demoPlaying; }
-// One small video contains frames 1–800. Seek only to the clicked object's segment.
+// One video contains frames 1–1140. Seek only to the clicked object's segment.
 function play(start,end,message='正在靠近…') {
   return new Promise(resolve=>{
     let timer, poll, frameCallback, done=false, started=false;
@@ -44,7 +44,7 @@ function play(start,end,message='正在靠近…') {
     if(video.readyState>=1)seek();
     else {
       video.addEventListener('loadedmetadata',seek,{once:true});
-      video.preload='auto';video.src='assets/room/tour.mp4?v=quality-1080-1';video.load();
+      video.preload='auto';video.src='assets/room/tour.mp4?v=frames-1140-1';video.load();
     }
   });
 }
@@ -97,7 +97,7 @@ $('#guide').addEventListener('click',()=>{const show=room.classList.toggle('labe
 $('#demo').addEventListener('click',async()=>{
   if(demoPlaying){cancelPlayback();return}
   if(busy)return;roomPosition={left:stage.scrollLeft,top:stage.scrollTop};centerRoom();demoPlaying=true;setBusy(true);$('#demo').textContent='回到房間 ×';
-  await play(1,800);demoPlaying=false;room.classList.remove('playing');stage.scrollTo(roomPosition.left,roomPosition.top);setBusy(false);$('#demo').textContent='播放房間導覽 ↗';
+  await play(1,1140);demoPlaying=false;room.classList.remove('playing');stage.scrollTo(roomPosition.left,roomPosition.top);setBusy(false);$('#demo').textContent='播放房間導覽 ↗';
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&busy&&!dialog.open)cancelPlayback()});
 
