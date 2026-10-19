@@ -1,27 +1,38 @@
-# Katy’s Tour｜黃暐喬個人網站
+# Katy’s Room｜黃暐喬
 
-網站入口位於儲存庫最外層的 `index.html`，可直接開啟，或由 GitHub Pages 發佈。
+純 HTML、CSS、原生 JavaScript 的互動房間作品集，不需要安裝套件或建置。
+開啟即是房間；點物件看內容，關閉後回到房間。
 
-## 網站檔案
+- 矮櫃：學歷、經歷
+- 書架：自我介紹
+- 報紙：新聞作品
+- 筆電：數位敘事與技能
+- 筆記本：為什麼做新聞
+- 小提琴：興趣
+- 電話：聯絡方式
 
-- `index.html`：網站入口與原稿內容
-- `style.css`：版面與樣式
-- `data.js`：作品、經歷、技能與自我介紹
-- `app.js`：作品篩選、詳情、書架互動
-- `assets/`：網站素材
+前 800 張 render 已壓成 `assets/room/tour.mp4`（720p、24fps），首次點擊才載入。
+矮櫃、書架、報紙、筆電有完整來回動畫；其餘物件直接開啟內容。
+導覽會播放目前的前 800 格（33.33 秒），最後回首頁；Esc 可結束。
+手機保留完整房間比例，避免物件點擊位置因裁切錯位。
+減少動態效果設定會略過轉場；影片無法播放時自動使用靜態畫面。
 
-網站內容以提供的原稿為準。正式 PDF 履歷與採訪地點尚待提供。
-
-## 本機預覽
+## 預覽
 
 ```sh
-python3 -m http.server 4173
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-開啟 http://localhost:4173/。
+開啟 http://127.0.0.1:4173/。GitHub Pages 仍可從根目錄發佈。
+`data.js` 管理原稿內容；`app.js` 的 `clips` 管理每件物品的動畫起點、內容畫面與回程終點。
 
-## GitHub Pages
+## 更新 render
 
-在儲存庫 Settings → Pages，將來源設為 Deploy from a branch，選取 `main` 分支與 `/ (root)` 目錄。
+素材處理工具僅用於離線壓縮，網站不需要 Python、Pillow 或 ffmpeg。
+準備好 Pillow 與 ffmpeg（或 imageio-ffmpeg）後執行：
 
-舊入口 `katy-tour/dist/index.html` 會轉至最外層入口。後續請編輯最外層網站檔案。
+```sh
+python3 scripts/prepare-room.py /Users/weiciao/Desktop/work/pic 800
+```
+
+新增完整片段後，同步更新 `app.js` 的 `clips` 與導覽結束格數。

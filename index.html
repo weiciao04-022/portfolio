@@ -1,60 +1,37 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#eaf3fb"><meta name="description" content="黃暐喬 Katy Huang｜個人履歷與作品集">
-  <title>Katy’s Tour｜黃暐喬・報導足跡</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2ed">
+  <meta name="description" content="走進黃暐喬 Katy Huang 的房間，探索新聞作品、學經歷與日常。">
+  <title>Katy’s Room｜黃暐喬</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="assets/room/home.webp">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<a class="skip" href="#main">跳至主要內容</a>
-<header class="header">
-  <a class="brand" href="#home" aria-label="Katy’s Tour 首頁"><span class="brand-icon">↗</span><span>KATY’S TOUR<small>Reporting Routes Portfolio</small></span></a>
-  <button class="menu-button" aria-expanded="false" aria-controls="navigation">選單 <span>☰</span></button>
-  <nav id="navigation" aria-label="主要導覽"><a href="#stories">精選作品</a><a href="#map">報導足跡</a><a href="#history">經歷</a><a href="#about">關於我</a><a href="#contact">聯絡</a></nav>
-  <a class="nav-ticket" href="#ticket">我的履歷 <span>↗</span></a>
-</header>
-<main id="main">
-<section id="home" class="hero section-wrap">
-
-  <div class="hero-grid">
-    <div class="hero-copy"><p class="eyebrow">HOME — 首頁</p><h1>黃暐喬<br><span class="serif">Katy Huang</span></h1><div class="hero-actions"><a class="button primary" href="#stories">Browse Stories <span>↗</span></a><a class="text-link" href="#ticket">Get My Ticket (Resume) <span>→</span></a></div></div>
-    <div class="journey-art" aria-label="概念路線圖">
-      
-      <svg viewBox="0 0 560 410" role="img" aria-label="概念路線圖">
-        <defs><pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#c1d1e1"/></pattern></defs>
-        <rect width="560" height="410" fill="url(#grid)"/>
-        <path d="M-30 346H152Q190 346 190 308V171Q190 134 227 134H335Q375 134 375 94V-20" fill="none" stroke="#285ea0" stroke-width="9"/>
-        <path d="M38 430V285Q38 249 75 249H296Q333 249 333 286V323Q333 358 370 358H590" fill="none" stroke="#86adc7" stroke-width="7"/>
-        <path d="M-20 70H108Q144 70 144 106V166Q144 203 181 203H457Q495 203 495 242V430" fill="none" stroke="#c3c7b4" stroke-width="7"/>
-        <g fill="#f6f9fc" stroke="#285ea0" stroke-width="5"><circle cx="93" cy="346" r="11"/><circle cx="190" cy="203" r="13"/><circle cx="283" cy="134" r="11"/><circle cx="375" cy="47" r="11"/></g>
-        <g fill="#213b5a" font-size="14" font-family="sans-serif"></g>
-        <g transform="translate(330 218) rotate(-8)"><rect width="149" height="97" fill="#f9fbfd" stroke="#abc1d5"/><rect x="11" y="12" width="126" height="19" fill="#ddeaf5"/><path d="M18 44H131M18 56H108M18 68H122M18 80H78" stroke="#bacbd9"/></g>
-        <g transform="translate(45 102) rotate(8)"><rect width="82" height="104" rx="2" fill="#f5f6ec" stroke="#b5bba8"/><path d="M16 26H64M16 38H64M16 50H57M16 62H64M16 74H40" stroke="#b5bba8"/></g>
-        <g transform="translate(242 295)"><rect x="0" y="0" width="63" height="37" rx="4" fill="#d3e2ef" stroke="#315b83" stroke-width="2"/><rect x="7" y="7" width="37" height="17" rx="2" fill="#285ea0"/><path d="M49 9H57M49 15H57M49 21H57" stroke="#315b83"/><circle cx="15" cy="36" r="5" fill="#315b83"/><circle cx="49" cy="36" r="5" fill="#315b83"/></g>
-      </svg>
-      
-      
+  <header><a class="brand" href="./">Katy’s Room<span>黃暐喬的房間</span></a><p>每一件物品，都有我的一點故事。</p><button id="guide" aria-pressed="false">顯示物件名稱</button></header>
+  <main>
+    <div class="welcome"><span>WELCOME TO MY ROOM</span><h1>嗨，我是暐喬。<br><em>進來坐坐吧。</em></h1><p>點點房間裡的物品，慢慢認識我。</p></div>
+    <div class="room" id="room" aria-label="互動房間，點擊物件探索">
+      <img id="still" src="assets/room/home.webp" alt="陽光灑入房間，桌上放著報紙、筆電與筆記本，矮櫃上有相框，床邊有書架和小提琴。" width="1920" height="1080" fetchpriority="high">
+      <video id="tour" muted playsinline preload="none" aria-hidden="true"></video>
+      <div id="objects">
+        <button class="object" data-object="cabinet" style="--x:37%;--y:32%" aria-label="打開矮櫃：學歷與經歷"><i></i><span>學歷與經歷</span></button>
+        <button class="object" data-object="bookshelf" style="--x:90%;--y:29%" aria-label="打開書架：關於我"><i></i><span>關於我</span></button>
+        <button class="object" data-object="newspaper" style="--x:14%;--y:65%" aria-label="打開報紙：新聞作品"><i></i><span>新聞作品</span></button>
+        <button class="object" data-object="laptop" style="--x:19%;--y:55%" aria-label="打開筆電：數位敘事"><i></i><span>數位敘事</span></button>
+        <button class="object" data-object="notebook" style="--x:8%;--y:67%" aria-label="打開筆記本：為什麼做新聞"><i></i><span>採訪筆記</span></button>
+        <button class="object" data-object="violin" style="--x:77%;--y:49%" aria-label="打開小提琴：生活與興趣"><i></i><span>生活與興趣</span></button>
+        <button class="object" data-object="phone" style="--x:24%;--y:50%" aria-label="打開電話：聯絡我"><i></i><span>聯絡我</span></button>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
     </div>
-  </div>
-
-</section>
-<section id="stories" class="stories section-wrap">
-  <div class="section-heading"><div><h2>Selected Stories — 精選作品</h2></div></div>
-  <div class="filter-bar"><div class="filters" role="group" aria-label="依作品類別篩選"><button class="active" data-filter="all" aria-pressed="true">全部作品 <span>20</span></button><button data-filter="feature" aria-pressed="false">專題報導</button><button data-filter="news" aria-pressed="false">新聞採訪</button><button data-filter="interactive" aria-pressed="false">數位敘事</button></div><span class="mono" id="story-count" aria-live="polite"></span></div>
-  <div id="story-grid" class="story-grid"></div><div class="show-more"><button id="show-more" class="button outline">查看全部 20 件作品 <span>↓</span></button></div>
-
-</section>
-<section id="map" class="map-section section-wrap"><div class="section-heading"><div><h2>Reporting Map — 各地報導足跡</h2></div></div><p>【待填】實際採訪地點／對應城市、地區或車站</p></section>
-<section id="history" class="history section-wrap">
-  <div class="section-heading"><div><h2>Route History — 學歷與經歷</h2></div></div>
-  <div class="history-layout"><div><h3 class="column-title">工作經歷 <span>EXPERIENCE</span></h3><div id="timeline" class="timeline"></div></div><div class="education"><h3 class="column-title">學歷 <span>EDUCATION</span></h3><div class="education-main"><span class="mono">2023.09 — 2027.06</span><h4>國立政治大學</h4><p>新聞學系<br>雙主修數位內容學士學程</p><small>傳播大一大二不分系 / 2023.09–2025.06<br>新聞學系 / 2025.09–2027.06<br>數位內容 / 2024.09–2027.06</small></div><details><summary>查看完整學歷 <span>＋</span></summary><p>私立靜心高級中學<br><small>2020.09–2023.06</small></p><p>私立復興實驗高級中學附設中學<br><small>2017.09–2020.06</small></p><p>私立復興實驗高級中學附設小學<br><small>2011.09–2017.06</small></p></details><div class="skill-panel"><h4>Skills</h4><div id="skills"></div></div></div></div>
-</section>
-<section id="about" class="about section-wrap"><div class="about-layout"><div><p class="eyebrow">ABOUT KATY</p><h2>關於我</h2><p>我是黃暐喬 Katy Huang，今年22歲，目前就讀國立政治大學新聞學系，並且雙主修數位內容學士學程。當時高中考大學時，一直被父母鼓勵進入科技業，他們認為是更有前景的行業，但是我一頭栽進政大傳播，想要證明：如果好好把內容做好，媒體在世界上總有站穩的地方。雙主修數位內容也是父母說著要和Computer Science有一些關係總是好的，但是在數位內容中，我反而開拓了自己內容產出的方法，例如運用互動裝置設計、3D建模等，可以讓敘事增加除了文字外的想像。於大學報專題時，很榮幸和前Yahoo奇摩總編李怡志教授學習，數位敘事的融媒體新聞產出，也感嘆當時高中想要逃離寫程式，卻也讓程式也融進新聞作品裡。</p><details class="why"><summary>為什麼想做新聞？ <span>＋</span></summary><p>在跑採訪的過程中，最讓我感激的一件事，是受訪者總願意向我分享自己的親身經歷。對受訪者而言，記者可能只是第一天見面的陌生人，但他們卻願意敞開心房，回答我的問題，甚至分享那些不曾輕易對外人訴說的故事。透過一次次的提問與傾聽，我得以在短暫的相遇中，與原本陌生的人建立深刻的理解。而每次採訪結束後，思考該如何說好一個故事，總是我最期待的環節。我覺得寫報導就像拼拼圖，將採訪中聽見的故事、實際查找的資料，以及現場觀察到的細節，一片片拼湊起來，讓原本零散、模糊的資訊，逐漸形成一幅清晰的圖像。然而，採訪得越多，我反而越覺得自己渺小。每認識一個人、聽見一段不同的人生經歷，就越發現自己原本認識的世界有多麼狹窄。也正因如此，我想成為記者。 我希望透過一次又一次的採訪與報導，不斷蒐集那些自己未曾理解的故事，像拼拼圖一樣，一片一片地拼湊出更遼闊的世界。</p></details><details><summary>工作之外的興趣 <span>＋</span></summary><p>在課業與工作之外，我喜歡和家人、朋友好好相聚。獨處時，我偶爾會拿起小提琴，暫時放下手邊待完成的任務，讓自己從忙碌的生活中抽離。最近也開始學習高爾夫球，透過練習觀察身體的動作與發力方式，逐漸了解如何運用自己的身體。夏天時，我喜歡游泳，讓全身都能徹底放鬆；到了冬天，則喜歡騎腳踏車通勤，也讓思緒自由延伸，從日常獲得新的靈感。</p></details></div><div class="digital-room"><div class="room-head"><span class="mono">Digital Room</span></div><div class="shelf"><button data-book="listen" class="book book-blue"><span>為什麼想做新聞</span></button><button data-book="create" class="book book-cream"><span>自我介紹</span></button><button data-book="life" class="book book-green"><span>工作之外的興趣</span></button><div class="room-plant" aria-hidden="true"><span>⌁</span><i></i></div></div><div class="book-note" id="book-note" aria-live="polite"></div></div></div></section>
-<section id="ticket" class="resume section-wrap"><div class="resume-copy"><p class="eyebrow">TRAIN TICKET</p><h2>PDF 履歷</h2><p>【待填】正式履歷</p><div class="resume-actions"><button disabled class="text-link">View</button><button disabled class="text-link">Download</button><button disabled class="text-link">Print</button></div></div><div class="resume-ticket"><div class="ticket-main"><div class="ticket-title"><span>KATY’S TOUR</span><small>PERSONAL RESUME / 個人履歷</small></div><span class="tiny">PASSENGER / 旅客</span><h3>黃暐喬 <span>Katy Huang</span></h3><div class="ticket-route"><div><span class="tiny">ROUTE</span><strong>Reporting Journey</strong></div><span>→</span><div><span class="tiny">DESTINATION</span><strong>Newsroom</strong></div></div><div class="ticket-bottom"><span></span><span></span></div></div><div class="resume-stub"><span class="mono">Resume PDF</span><div class="barcode" aria-hidden="true"></div><button class="button primary" disabled>Download</button><small>RESUME PDF</small></div></div><p class="ticket-disclaimer">這些是概念文案，不代表真實交通票證或車次。</p></section>
-<section id="contact" class="contact section-wrap"><div><p class="eyebrow">CONTACT</p><h2>聯絡方式</h2></div><div class="contact-links"><a href="mailto:katyhuang2004@gmail.com"><small>EMAIL / 個人信箱</small><span>katyhuang2004@gmail.com <b>↗</b></span></a><a href="mailto:112405118@g.nccu.edu.tw"><small>UNIVERSITY / 學校信箱</small><span>112405118@g.nccu.edu.tw <b>↗</b></span></a><a href="tel:+886909070707"><small>PHONE / 電話</small><span>0909 070 707 <b>↗</b></span></a></div></section>
-</main>
-<footer class="section-wrap"><a class="footer-brand" href="#home">KATY’S TOUR <span>↗</span></a><span>© 2026 Katy Huang.</span><a href="#home">Home ↑</a></footer>
-<dialog id="story-dialog"><button class="dialog-close" aria-label="關閉作品詳情">×</button><div id="dialog-content"></div></dialog>
-<script src="data.js"></script><script src="app.js"></script>
-</body></html>
+  </main>
+  <footer><span>黃暐喬 <b>Katy Huang</b></span><p>新聞採訪 · 數位敘事 · 生活的觀察者</p><button id="demo">播放房間導覽 <span aria-hidden="true">↗</span></button></footer>
+  <dialog id="content" aria-labelledby="page-title"><button id="close" aria-label="關閉內容，回到房間">回到房間 <span aria-hidden="true">×</span></button><div id="page"></div></dialog>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

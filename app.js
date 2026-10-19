@@ -1,46 +1,92 @@
 const $ = s => document.querySelector(s);
-const typeNames = {feature:'專題報導',news:'新聞採訪',interactive:'數位敘事'};
-const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function artwork(type){
- const palettes={dementia:['#cbd5c6','#6d8273','#f1f2e9'],cafe:['#d9cfc3','#877362','#f3e9dc'],body:['#cbd8e2','#6e8da6','#eff4f7'],digital:['#bdccd9','#4b6584','#e9f0f4'],campus:['#d7d8c9','#777d66','#f2f0e8'],culture:['#ddcfbf','#8d7663','#f4eddf'],train:['#cadce5','#607e93','#eff5f6'],science:['#ded6c9','#8b8070','#f5f1e8'],nature:['#c9d5c9','#728b77','#edf2e9']};
- const [bg,ink,paper]=palettes[type]||palettes.culture;
- let shapes='';
- if(type==='dementia') shapes=`<rect x="105" y="55" width="220" height="140" fill="${paper}"/><path d="M105 90H325M177 55V195M250 55V195" stroke="${bg}" stroke-width="3"/><path d="M165 240V172H263V240M166 211H263" stroke="${ink}" stroke-width="6" fill="none"/><path d="M178 171V126Q215 113 252 126V171" fill="${ink}" opacity=".7"/><circle cx="295" cy="218" r="25" fill="${paper}"/><path d="M295 200V218L306 226" stroke="${ink}" stroke-width="2"/><path d="M75 245H355" stroke="${ink}"/>`;
- else if(type==='cafe') shapes=`<path d="M0 60H430M50 0V300M380 0V300" stroke="${ink}" opacity=".2"/><path d="M50 60Q120 170 190 60M240 60Q310 170 380 60" stroke="${ink}" opacity=".4" fill="none"/><ellipse cx="215" cy="230" rx="133" ry="28" fill="${ink}" opacity=".25"/><path d="M120 157H196L188 214H129Z" fill="${paper}"/><path d="M196 168Q223 166 220 181Q220 198 193 198" stroke="${paper}" stroke-width="8" fill="none"/><ellipse cx="276" cy="202" rx="41" ry="12" fill="${paper}"/><path d="M241 200Q247 165 277 164Q306 165 312 200" fill="${ink}" opacity=".7"/><circle cx="276" cy="153" r="7" fill="${paper}"/><path d="M161 139Q148 125 161 111" stroke="${ink}" stroke-width="2" fill="none"/>`;
- else if(type==='body') shapes=`<rect x="76" y="36" width="155" height="231" rx="77" fill="${paper}" stroke="${ink}" stroke-width="2"/><path d="M118 224Q102 188 136 159Q126 137 135 114Q148 93 167 113Q180 133 165 159Q201 185 187 224Z" fill="${bg}" stroke="${ink}" stroke-width="2"/><rect x="264" y="69" width="99" height="160" rx="12" fill="${ink}" transform="rotate(8 314 150)"/><rect x="274" y="80" width="79" height="127" rx="5" fill="${paper}" transform="rotate(8 314 150)"/><path d="M289 118H337M289 129H326M289 175H336" stroke="${ink}" opacity=".6"/><circle cx="313" cy="150" r="12" fill="${bg}"/>`;
- else if(type==='digital') shapes=`<rect x="94" y="59" width="247" height="165" rx="3" fill="${ink}"/><rect x="105" y="71" width="225" height="139" fill="${bg}"/><path d="M168 204V171Q180 149 212 150Q242 151 254 174V204" fill="${paper}" opacity=".7"/><circle cx="212" cy="118" r="25" fill="${paper}" opacity=".8"/><path d="M200 224V251M175 251H258" stroke="${ink}" stroke-width="7"/><path d="M105 112H330M105 153H330M164 71V210M269 71V210" stroke="${ink}" opacity=".12"/><g fill="${ink}" opacity=".4"><rect x="241" y="96" width="14" height="14"/><rect x="262" y="115" width="9" height="9"/><rect x="283" y="138" width="16" height="16"/></g>`;
- else if(type==='campus') shapes=`<path d="M63 263V127H360V263" fill="${paper}"/><path d="M46 128L213 51L379 128Z" fill="${ink}" opacity=".7"/><g fill="${bg}"><rect x="86" y="151" width="31" height="95"/><rect x="139" y="151" width="31" height="95"/><rect x="192" y="151" width="31" height="95"/><rect x="245" y="151" width="31" height="95"/><rect x="298" y="151" width="31" height="95"/></g><path d="M38 263H390" stroke="${ink}" stroke-width="3"/><rect x="270" y="202" width="91" height="59" fill="${ink}" transform="rotate(-7 320 230)"/><path d="M282 222H345M281 233H331" stroke="${paper}" stroke-width="2"/>`;
- else if(type==='train') shapes=`<path d="M0 249H430M0 264H430" stroke="${ink}" stroke-width="2"/><rect x="65" y="122" width="291" height="119" rx="17" fill="${paper}" stroke="${ink}" stroke-width="2"/><path d="M67 208H354" stroke="${ink}" stroke-width="6"/><g fill="${bg}"><rect x="81" y="143" width="49" height="42" rx="3"/><rect x="144" y="143" width="49" height="42" rx="3"/><rect x="208" y="143" width="49" height="42" rx="3"/><rect x="276" y="143" width="57" height="85" rx="4"/></g><circle cx="111" cy="245" r="9" fill="${ink}"/><circle cx="311" cy="245" r="9" fill="${ink}"/><path d="M0 82H430M122 0V83M327 0V83" stroke="${ink}" opacity=".3"/>`;
- else if(type==='nature') shapes=`<path d="M0 270L79 137L130 202L226 85L330 220L389 152L430 226V300H0" fill="${ink}" opacity=".4"/><path d="M0 284L153 212L224 248L339 181L430 246V300H0" fill="${paper}"/><path d="M146 91Q163 73 181 91Q199 72 217 91" stroke="${ink}" stroke-width="3" fill="none"/><path d="M255 71Q267 57 279 71Q291 57 303 71" stroke="${ink}" stroke-width="2" fill="none"/><circle cx="83" cy="72" r="24" fill="${paper}"/>`;
- else if(type==='science') shapes=`<g fill="none" stroke="${ink}" stroke-width="2"><ellipse cx="213" cy="151" rx="126" ry="45" transform="rotate(25 213 151)"/><ellipse cx="213" cy="151" rx="126" ry="45" transform="rotate(-25 213 151)"/><ellipse cx="213" cy="151" rx="45" ry="119"/></g><circle cx="213" cy="151" r="25" fill="${paper}"/><circle cx="107" cy="122" r="9" fill="${ink}"/><circle cx="291" cy="220" r="9" fill="${ink}"/><circle cx="224" cy="35" r="8" fill="${ink}"/>`;
- else shapes=`<path d="M78 94L208 119V249L78 220Z" fill="${paper}" stroke="${ink}" stroke-width="2"/><path d="M208 119L348 94V220L208 249Z" fill="${paper}" stroke="${ink}" stroke-width="2"/><path d="M98 126L184 142M98 146L184 162M98 166L184 182M232 140L326 124M232 160L326 144M232 180L300 169" stroke="${ink}" opacity=".45"/><path d="M183 58Q198 35 213 58Q228 35 244 58" stroke="${ink}" stroke-width="2" fill="none"/><circle cx="352" cy="54" r="17" fill="${paper}"/>`;
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 300" aria-hidden="true"><rect width="430" height="300" fill="${bg}"/>${shapes}</svg>`;
+const room = $('#room'), video = $('#tour'), still = $('#still'), dialog = $('#content');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const clips = {cabinet:[121,192,252],bookshelf:[253,396,480],newspaper:[481,552,612],laptop:[613,684,744]};
+const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['A LITTLE ABOUT ME','翻開我的故事'],newspaper:['SELECTED REPORTING','我的新聞作品'],laptop:['DIGITAL STORYTELLING','用不同的方式說故事'],notebook:['NOTES FROM THE FIELD','為什麼想做新聞？'],violin:['AFTER HOURS','工作之外的我'],phone:['SAY HELLO','保持聯絡']};
+let current = null, busy = false, demoPlaying = false, returnFocus = null, cancelPlayback = () => {};
+const paragraphs = text => text.split(/(?<=。)\s+/).map(p=>`<p>${p}</p>`).join('');
+function storyList(type='all') {
+  return stories.filter(s=>type==='all'||s.type===type).map(s=>`<a class="story" href="https://unews.nccu.edu.tw/unews/${s.slug}/" target="_blank" rel="noopener"><h3>${s.title}</h3><small>政大大學報 · ${{feature:'專題報導',news:'新聞採訪',interactive:'數位敘事'}[s.type]}<span>閱讀作品 ↗</span></small></a>`).join('');
 }
-let filter='all', expanded=false;
-function renderStories(){
- const matched=stories.map((s,i)=>({...s,index:i})).filter(s=>filter==='all'||s.type===filter);
- const visible=expanded?matched:matched.slice(0,6);
- $('#story-grid').innerHTML=visible.map(s=>`<button class="story-card" data-story="${s.index}" aria-label="查看作品：${escapeHtml(s.title)}"><div class="story-cover">${artwork(s.art)}<span class="cover-label">${typeNames[s.type]} / ${s.type.toUpperCase()}</span></div><div class="story-meta"><span>政大大學報</span></div><h3>${s.type==='interactive'?'【融媒體】':''}${s.title}</h3><div class="story-footer"><span></span><span aria-hidden="true">↗</span></div></button>`).join('');
- $('#story-count').textContent=`${visible.length} / ${matched.length}`;
- $('#show-more').hidden=matched.length<=6;
- $('#show-more').innerHTML=expanded?'收合作品清單 <span>↑</span>':`查看全部 ${matched.length} 件作品 <span>↓</span>`;
+function content(id) {
+  if(id==='cabinet') return `<article><small>EDUCATION</small><h3>國立政治大學</h3><p>新聞學系 · 雙主修數位內容學士學程</p><time>2023.09 — 2027.06</time><details><summary>更早的學歷</summary><p>私立靜心高級中學｜2020.09–2023.06<br>私立復興實驗高級中學附設中學｜2017.09–2020.06<br>私立復興實驗高級中學附設小學｜2011.09–2017.06</p></details></article>${experiences.map(x=>`<article><time>${x.date}</time><h3>${x.org}</h3><p>${x.position}</p><p>${x.text}</p></article>`).join('')}`;
+  if(id==='bookshelf') return `<div class="tabs" aria-label="選一本書">${['create','listen','life'].map((key,i)=>[key,books[key]]).map(([key,b],i)=>`<button data-book="${key}" aria-pressed="${i===0}">${b.title}</button>`).join('')}</div><div id="book-text">${paragraphs(books.create.text)}</div>`;
+  if(id==='newspaper') return `<div class="tabs" aria-label="作品類別"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="feature" aria-pressed="false">專題</button><button data-filter="news" aria-pressed="false">新聞</button></div><div id="stories">${storyList()}</div>`;
+  if(id==='laptop') return `${storyList('interactive')}<h3>我的製作工具</h3>${skillGroups.map(s=>`<article><h3>${s.title}</h3><p>${s.text}</p></article>`).join('')}`;
+  if(id==='notebook') return paragraphs(books.listen.text);
+  if(id==='violin') return paragraphs(books.life.text);
+  return `<p>歡迎聊聊採訪、創作，或一個值得被說出來的故事。</p><a class="contact" href="mailto:katyhuang2004@gmail.com"><small>EMAIL</small>katyhuang2004@gmail.com ↗</a><a class="contact" href="mailto:112405118@g.nccu.edu.tw"><small>UNIVERSITY</small>112405118@g.nccu.edu.tw ↗</a><a class="contact" href="tel:+886909070707"><small>PHONE</small>0909 070 707 ↗</a>`;
 }
-$('.filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;expanded=false;document.querySelectorAll('[data-filter]').forEach(el=>{el.classList.toggle('active',el===b);el.setAttribute('aria-pressed',String(el===b))});renderStories()});
-$('#show-more').addEventListener('click',()=>{expanded=!expanded;renderStories();if(!expanded)$('#stories').scrollIntoView({behavior:'smooth'})});
-const dialog=$('#story-dialog');
-function openStory(index){
- const s=stories[index];
- $('#dialog-content').innerHTML=`<p class="eyebrow">${typeNames[s.type]}</p><h2>${s.type==='interactive'?'【融媒體】':''}${s.title}</h2><div class="dialog-art">${artwork(s.art)}</div><p>政大大學報</p><a class="button primary" target="_blank" rel="noopener" href="https://unews.nccu.edu.tw/unews/${s.slug}/">閱讀作品 <span>↗</span></a>`;
- dialog.showModal();
+function setBusy(value) { busy=value; document.body.classList.toggle('busy',value); $('#objects').inert=value; $('#demo').disabled=value&&!demoPlaying; }
+// One small video contains frames 1–800. Seek only to the clicked object's segment.
+function play(start,end) {
+  return new Promise(resolve=>{
+    let timer, poll, frameCallback, done=false, started=false;
+    const finish = ok => {
+      if(done)return;done=true;video.pause();clearTimeout(timer);clearInterval(poll);
+      if(frameCallback!==undefined)video.cancelVideoFrameCallback(frameCallback);
+      video.removeEventListener('seeked',begin);video.removeEventListener('loadedmetadata',seek);video.removeEventListener('error',fail);
+      $('#status').textContent='';resolve(ok);
+    };
+    const fail = () => finish(false);
+    cancelPlayback=fail;
+    const stop=(end-1)/24;
+    const check=()=>{if(video.currentTime>=stop-.018)finish(true)};
+    const watch=()=>{check();if(!done)frameCallback=video.requestVideoFrameCallback(watch)};
+    function begin(){
+      if(started||done)return;started=true;
+      room.classList.add('playing');$('#status').textContent='';
+      video.play().then(()=>{
+        if(done){video.pause();return}
+        if(video.requestVideoFrameCallback)frameCallback=video.requestVideoFrameCallback(watch);
+        poll=setInterval(check,25);
+      }).catch(fail);
+    }
+    $('#status').textContent='正在靠近…';
+    timer=setTimeout(fail,20000+(end-start)/24*1000);
+    video.addEventListener('error',fail,{once:true});
+    video.addEventListener('seeked',begin,{once:true});
+    function seek(){
+      video.currentTime=(start-1)/24;
+      if(video.readyState>=2&&!video.seeking)begin();
+    }
+    if(video.readyState>=1)seek();
+    else {
+      video.addEventListener('loadedmetadata',seek,{once:true});
+      video.preload='auto';video.src='assets/room/tour.mp4';video.load();
+    }
+  });
 }
-document.addEventListener('click',e=>{const b=e.target.closest('[data-story]');if(b)openStory(Number(b.dataset.story))});
-$('.dialog-close').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
-$('#timeline').innerHTML=experiences.map(x=>`<article class="timeline-item"><time>${x.date}</time><h4>${x.org}</h4><div class="position">${x.position}</div><p>${x.text}</p></article>`).join('');
-$('#skills').innerHTML=skillGroups.map(x=>`<div class="skill-group"><h5>${x.title}</h5><p>${x.text}</p></div>`).join('');
-$('.shelf').addEventListener('click',e=>{const b=e.target.closest('[data-book]');if(!b)return;const x=books[b.dataset.book];document.querySelectorAll('[data-book]').forEach(el=>el.classList.toggle('active',el===b));$('#book-note').innerHTML=`<h3>${x.title}</h3><p>${x.text}</p>`});
-$('.menu-button').addEventListener('click',()=>{const open=$('#navigation').classList.toggle('open');$('.menu-button').setAttribute('aria-expanded',String(open))});
-$('#navigation').addEventListener('click',e=>{if(e.target.closest('a')){$('#navigation').classList.remove('open');$('.menu-button').setAttribute('aria-expanded','false')}});
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('#navigation a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))})},{rootMargin:'-15% 0px -60% 0px'});
-document.querySelectorAll('main>section').forEach(s=>observer.observe(s));
-renderStories();
+async function openObject(id,button) {
+  if(busy||dialog.open)return;
+  current=id;returnFocus=button;setBusy(true);
+  let animated=false;
+  if(clips[id]&&!reducedMotion.matches)animated=await play(clips[id][0],clips[id][1]);
+  if(!animated){room.classList.remove('playing');still.src=`assets/room/${clips[id]?id:'home'}.webp`}
+  const [label,title]=titles[id];
+  $('#page').innerHTML=`<p class="eyebrow">${label}</p><h2 id="page-title">${title}</h2>${content(id)}`;
+  dialog.showModal();dialog.scrollTop=0;setBusy(false);
+}
+async function closeContent() {
+  if(busy)return;
+  setBusy(true);dialog.close();
+  if(clips[current]&&!reducedMotion.matches&&room.classList.contains('playing'))await play(clips[current][1],clips[current][2]);
+  still.src='assets/room/home.webp';room.classList.remove('playing');setBusy(false);returnFocus?.focus();current=null;
+}
+$('#objects').addEventListener('click',e=>{const b=e.target.closest('[data-object]');if(b)openObject(b.dataset.object,b)});
+$('#close').addEventListener('click',closeContent);
+dialog.addEventListener('cancel',e=>{e.preventDefault();closeContent()});
+dialog.addEventListener('click',e=>{
+  if(e.target===dialog&&e.offsetX<0){closeContent();return}
+  const b=e.target.closest('[data-book],[data-filter]');if(!b)return;
+  b.parentElement.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  if(b.dataset.book)$('#book-text').innerHTML=paragraphs(books[b.dataset.book].text);
+  else $('#stories').innerHTML=storyList(b.dataset.filter);
+});
+$('#guide').addEventListener('click',()=>{const show=room.classList.toggle('labels');$('#guide').setAttribute('aria-pressed',show);$('#guide').textContent=show?'隱藏物件名稱':'顯示物件名稱'});
+$('#demo').addEventListener('click',async()=>{
+  if(demoPlaying){cancelPlayback();return}
+  if(busy)return;demoPlaying=true;setBusy(true);$('#demo').textContent='回到房間 ×';
+  await play(1,800);demoPlaying=false;room.classList.remove('playing');setBusy(false);$('#demo').textContent='播放房間導覽 ↗';
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&busy&&!dialog.open)cancelPlayback()});
