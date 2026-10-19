@@ -94,3 +94,8 @@ dialog[data-view=phone]{width:min(530px,calc(100% - 40px))}.letter-mark{display:
 @media(prefers-reduced-motion:reduce){dialog[open],.book-page,.screen-page{animation:none}}
 
 body:has(dialog[open]){overflow:hidden}body:has(dialog[open]) #objects,body:has(dialog[open]) .welcome{visibility:hidden}
+
+/* User-supplied feature photos keep their complete composition and proportions. */
+.book-page .project-cover:has(img){align-self:start;min-height:0;position:sticky;top:80px}
+.book-page .project-cover img{height:auto;max-height:none;object-fit:contain}
+@media(max-width:700px){.book-page .project-cover:has(img){position:static;padding:0}}

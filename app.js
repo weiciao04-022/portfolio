@@ -1,5 +1,8 @@
 const $ = s => document.querySelector(s);
 const room = $('#room'), video = $('#tour'), still = $('#still'), dialog = $('#content');
+const stage = $('#room-stage');
+let roomPosition = {left:0,top:0};
+function centerRoom(){stage.scrollTo((stage.scrollWidth-stage.clientWidth)/2,(stage.scrollHeight-stage.clientHeight)/2);document.body.classList.toggle('pannable',stage.scrollWidth>stage.clientWidth*1.15)}
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const clips = {cabinet:[121,192,252],bookshelf:[253,396,480],newspaper:[481,552,612],laptop:[613,684,744]};
 const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['FEATURE STORIES','我的專題報導'],newspaper:['SELECTED REPORTING','我的新聞作品'],laptop:['DIGITAL STORYTELLING','用不同的方式說故事'],notebook:['ABOUT ME','關於我'],violin:['AFTER HOURS','工作之外的我'],phone:['SAY HELLO','保持聯絡']};
@@ -47,7 +50,7 @@ function play(start,end,message='正在靠近…') {
 }
 async function openObject(id,button) {
   if(busy||dialog.open)return;
-  current=id;returnFocus=button;setBusy(true);
+  current=id;returnFocus=button;roomPosition={left:stage.scrollLeft,top:stage.scrollTop};centerRoom();setBusy(true);
   let animated=false;
   if(clips[id]&&!reducedMotion.matches)animated=await play(clips[id][0],clips[id][1]);
   if(!animated){
@@ -66,7 +69,7 @@ async function closeContent() {
   if(clips[current]&&!reducedMotion.matches&&room.classList.contains('playing'))
     await play(clips[current][1],clips[current][2],'正在回到房間…');
   video.pause();still.src='assets/room/home.webp?v=quality-1080-1';room.classList.remove('playing');setBusy(false);
-  returnFocus?.setAttribute('aria-expanded','false');returnFocus?.focus();current=null;
+  stage.scrollTo(roomPosition.left,roomPosition.top);returnFocus?.setAttribute('aria-expanded','false');returnFocus?.focus({preventScroll:true});current=null;
 }
 $('#skip-animation').addEventListener('click',()=>cancelPlayback());
 $('#objects').addEventListener('click',e=>{const b=e.target.closest('[data-object]');if(b)openObject(b.dataset.object,b)});
@@ -87,7 +90,10 @@ dialog.addEventListener('keydown',e=>{
 $('#guide').addEventListener('click',()=>{const show=room.classList.toggle('labels');$('#guide').setAttribute('aria-pressed',show);$('#guide').textContent=show?'隱藏物件名稱':'顯示物件名稱'});
 $('#demo').addEventListener('click',async()=>{
   if(demoPlaying){cancelPlayback();return}
-  if(busy)return;demoPlaying=true;setBusy(true);$('#demo').textContent='回到房間 ×';
-  await play(1,800);demoPlaying=false;room.classList.remove('playing');setBusy(false);$('#demo').textContent='播放房間導覽 ↗';
+  if(busy)return;roomPosition={left:stage.scrollLeft,top:stage.scrollTop};centerRoom();demoPlaying=true;setBusy(true);$('#demo').textContent='回到房間 ×';
+  await play(1,800);demoPlaying=false;room.classList.remove('playing');stage.scrollTo(roomPosition.left,roomPosition.top);setBusy(false);$('#demo').textContent='播放房間導覽 ↗';
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&busy&&!dialog.open)cancelPlayback()});
+
+requestAnimationFrame(centerRoom);
+window.addEventListener('resize',centerRoom);
