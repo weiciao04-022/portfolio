@@ -31,7 +31,7 @@ function projectTabs(items, kind, label) {
 // The supplied reference uses one continuous editorial page with photo shortcuts.
 function featureReader() {
   const items=portfolio.features;
-  const montage=items.map(work=>`<button class="feature-jump" data-feature="feature-story-${work.id}" aria-label="前往${escapeHTML(work.title)}">${provided(work.image)?`<img src="${escapeHTML(work.image)}" alt="" decoding="async">`:missing('作品封面')}</button>`).join('');
+  const montage=items.map(work=>`<button class="feature-jump" data-feature="feature-story-${work.id}" aria-label="前往${escapeHTML(work.title)}">${provided(work.image)?`<img src="${escapeHTML(work.image)}" alt="" decoding="async">`:missing('作品封面')}<span class="feature-hover-title">${field(work.title,'作品名稱')}</span></button>`).join('');
   const articles=items.map((work,index)=>`<section class="feature-article" id="feature-story-${work.id}" aria-labelledby="feature-title-${work.id}">
     <span class="feature-word word-top" aria-hidden="true">${escapeHTML(work.watermarks?.[0]||'')}</span>
     <span class="feature-word word-bottom" aria-hidden="true">${escapeHTML(work.watermarks?.[1]||'')}</span>
