@@ -4,7 +4,7 @@
 開啟即是房間；點物件看內容，關閉後回到房間。
 
 - 矮櫃：學歷、經歷
-- 書本：專題報導，右側索引切換
+- 書本：專題報導，四格照片索引與交錯圖文閱讀
 - 報紙／雜誌：新聞採訪作品
 - 筆電：失智症／宏福苑／體態焦慮三個數位敘事分頁
 - 筆記本：關於我與核心技能
@@ -28,7 +28,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 開啟 http://127.0.0.1:4173/。GitHub Pages 仍可從根目錄發佈。
 `data.js` 的 `portfolio` 管理各物件內容，`views.js` 管理閱讀介面，`content.css` 管理閱讀樣式，`style.css` 保留房間樣式。
-所有 null 內容均明確顯示「待更新」，包含簡介、分工、日期、封面及宏福苑數位作品連結。新增專題可加入 `portfolio.features`，結構為 `{id, tab, title, summary, role, image, url}`。
+所有 null 內容均明確顯示「待更新」，包含簡介、分工、日期、封面及宏福苑數位作品連結。新增專題可加入 `portfolio.features`，結構為 `{id, tab, title, summary, role, image, url, watermarks}`。`watermarks` 是參考圖中的淡色關鍵字。
 `app.js` 的 `clips` 管理每件物品的動畫起點、內容畫面與回程終點。
 
 ## 更新 render

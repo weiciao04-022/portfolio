@@ -21,15 +21,28 @@ function projectPage(work, index, kind) {
       : `<span class="cover-number" aria-hidden="true">${String(index+1).padStart(2,'0')}</span><span>${missing('作品封面')}</span>`}</div>
     <div class="project-copy"><p class="eyebrow">${kind==='book-page'?'FEATURE STORY':'INTERACTIVE STORY'} / ${String(index+1).padStart(2,'0')}</p>
     <h3>${field(work.title,'作品名稱')}</h3><p>${field(work.summary,'作品簡介')}</p>
-    <dl><dt>我的角色與貢獻</dt><dd>${field(work.role,'這件作品的角色與具體貢獻')}</dd></dl>${workLink(work)}</div>
+    ${workLink(work)}</div>
   </div>`;
 }
 function projectTabs(items, kind, label) {
   return `<div class="project-tabs" role="tablist" aria-label="${label}" ${kind==='book-page'?'aria-orientation="vertical"':''}>${items.map((work,i)=>
     `<button role="tab" id="tab-${work.id}" aria-controls="project-panel" aria-selected="${i===0}" tabindex="${i===0?0:-1}" data-project="${i}">${escapeHTML(work.tab)}</button>`).join('')}</div>`;
 }
+// The supplied reference uses one continuous editorial page with photo shortcuts.
+function featureReader() {
+  const items=portfolio.features;
+  const montage=items.map(work=>`<button class="feature-jump" data-feature="feature-story-${work.id}" aria-label="前往${escapeHTML(work.title)}">${provided(work.image)?`<img src="${escapeHTML(work.image)}" alt="" decoding="async">`:missing('作品封面')}</button>`).join('');
+  const articles=items.map((work,index)=>`<section class="feature-article" id="feature-story-${work.id}" aria-labelledby="feature-title-${work.id}">
+    <span class="feature-word word-top" aria-hidden="true">${escapeHTML(work.watermarks?.[0]||'')}</span>
+    <span class="feature-word word-bottom" aria-hidden="true">${escapeHTML(work.watermarks?.[1]||'')}</span>
+    <h3 tabindex="-1" id="feature-title-${work.id}">${field(work.title,'作品名稱')}</h3>
+    <div class="feature-body"><figure>${provided(work.image)?`<img src="${escapeHTML(work.image)}" alt="${escapeHTML(work.title)}封面" width="${work.imageWidth}" height="${work.imageHeight}" loading="lazy" decoding="async">`:missing('作品封面')}</figure>
+    <div class="feature-description"><p>${field(work.summary,'作品簡介')}</p>${workLink(work)}</div></div>
+  </section>`).join('');
+  return `<div class="feature-reader"><nav class="feature-montage" aria-label="專題照片索引">${montage}</nav><div class="feature-stories">${articles}</div></div>`;
+}
 function content(id) {
-  if(id==='bookshelf') return `<div class="book-reader">${projectTabs(portfolio.features,'book-page','專題索引')}<div id="project-content">${projectPage(portfolio.features[0],0,'book-page')}</div></div><p class="reader-hint">點右側標籤紙，翻到另一篇專題。</p>`;
+  if(id==='bookshelf') return featureReader();
   if(id==='laptop') return `<div class="computer"><div class="screen-bar"><span class="screen-light" aria-hidden="true"></span><span>Katy’s digital workspace</span></div>${projectTabs(portfolio.digital,'screen-page','數位敘事作品')}<div id="project-content">${projectPage(portfolio.digital[0],0,'screen-page')}</div><div class="screen-chin" aria-hidden="true">KATY’S ROOM</div></div>`;
   if(id==='newspaper') return `<div class="gazette"><div class="masthead"><span>新聞採訪作品</span><p>${missing('刊頭短句')}</p></div><div class="issue-line"><span>政大大學報 / 新聞採訪選集</span><span>${portfolio.news.length} 篇作品</span></div><div class="news-columns">${portfolio.news.map((work,i)=>`<article class="news-story"><p class="story-no">${String(i+1).padStart(2,'0')} / REPORTING</p><h3>${field(work.title,'作品名稱')}</h3><p class="byline">${escapeHTML(work.media)} · ${field(work.date,'發表日期')}</p><p>${field(work.summary,'採訪導言')}</p><p class="byline">角色：${field(work.role,'此篇採訪／編輯分工')}</p>${workLink(work)}</article>`).join('')}</div></div>`;
   if(id==='phone') return `<div class="contact-note"><span class="letter-mark" aria-hidden="true">K.</span><p>${missing('聯絡短句')}</p>${contactRow('學校 EMAIL','✉',portfolio.contact.email,portfolio.contact.email, 'mailto:')}${contactRow('PHONE','☎',portfolio.contact.phone,portfolio.contact.phoneHref,'tel:')}</div>`;

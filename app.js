@@ -78,6 +78,12 @@ dialog.addEventListener('cancel',e=>{e.preventDefault();closeContent()});
 dialog.addEventListener('click',e=>{
   if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeContent()}
   const tab=e.target.closest('[data-project]');if(tab)selectProject(tab);
+  const jump=e.target.closest('[data-feature]');
+  if(jump){
+    const story=document.getElementById(jump.dataset.feature);if(!story)return;
+    const top=dialog.scrollTop+story.getBoundingClientRect().top-dialog.getBoundingClientRect().top-64;
+    story.querySelector('h3')?.focus({preventScroll:true});dialog.scrollTo({top,behavior:reducedMotion.matches?'instant':'smooth'});
+  }
 });
 dialog.addEventListener('keydown',e=>{
   const tab=e.target.closest('[role=tab]');if(!tab)return;
