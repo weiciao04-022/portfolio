@@ -7,16 +7,16 @@
   <meta name="description" content="走進黃暐喬 Katy Huang 的房間，探索新聞作品、學經歷與日常。">
   <title>Katy’s Room｜黃暐喬</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" as="image" href="assets/room/home.webp">
-  <link rel="stylesheet" href="style.css?v=content-policy-1">
-  <link rel="stylesheet" href="content.css?v=content-policy-1">
+  <link rel="preload" as="image" href="assets/room/home.webp?v=quality-1080-1">
+  <link rel="stylesheet" href="style.css?v=quality-1080-1">
+  <link rel="stylesheet" href="content.css?v=quality-1080-1">
 </head>
 <body>
   <header><a class="brand" href="./">Katy’s Room<span>黃暐喬的房間</span></a><p>每一件物品，都有我的一點故事。</p><button id="guide" aria-pressed="false">顯示物件名稱</button></header>
   <main>
     <div class="welcome"><span>WELCOME TO MY ROOM</span><h1>嗨，我是暐喬。<br><em>進來坐坐吧。</em></h1><p>點點房間裡的物品，慢慢認識我。</p></div>
     <div class="room" id="room" aria-label="互動房間，點擊物件探索">
-      <img id="still" src="assets/room/home.webp" alt="陽光灑入房間，桌上放著報紙、筆電與筆記本，矮櫃上有相框，床邊有書架和小提琴。" width="1920" height="1080" fetchpriority="high">
+      <img id="still" src="assets/room/home.webp?v=quality-1080-1" alt="陽光灑入房間，桌上放著報紙、筆電與筆記本，矮櫃上有相框，床邊有書架和小提琴。" width="1920" height="1080" fetchpriority="high">
       <video id="tour" muted playsinline preload="none" aria-hidden="true"></video>
       <div id="objects">
         <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="cabinet" style="--x:37%;--y:32%" aria-label="打開矮櫃：學歷與經歷"><i></i><span>學歷與經歷</span></button>
@@ -28,12 +28,13 @@
         <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="phone" style="--x:24%;--y:50%" aria-label="打開電話：聯絡我"><i></i><span>聯絡我</span></button>
       </div>
       <p id="status" role="status" aria-live="polite"></p>
+      <button id="skip-animation" hidden>略過動畫</button>
     </div>
   </main>
   <footer><span>黃暐喬 <b>Katy Huang</b></span><p>新聞採訪 · 數位敘事 · 生活的觀察者</p><button id="demo">播放房間導覽 <span aria-hidden="true">↗</span></button></footer>
   <dialog id="content" aria-labelledby="page-title"><button id="close" aria-label="關閉內容，回到房間">回到房間 <span aria-hidden="true">×</span></button><div id="page"></div></dialog>
-  <script src="data.js?v=content-policy-1"></script>
-  <script src="views.js?v=content-policy-1"></script>
-  <script src="app.js?v=content-policy-1"></script>
+  <script src="data.js?v=quality-1080-1"></script>
+  <script src="views.js?v=quality-1080-1"></script>
+  <script src="app.js?v=quality-1080-1"></script>
 </body>
 </html>

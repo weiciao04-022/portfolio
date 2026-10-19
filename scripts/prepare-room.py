@@ -20,11 +20,11 @@ if not encoder:
     encoder = get_ffmpeg_exe()
 subprocess.run([encoder, '-y', '-framerate', '24', '-start_number', '1',
     '-i', str(source / 'Room_%04d.png'), '-frames:v', str(count),
-    '-vf', 'scale=1280:720', '-c:v', 'libx264', '-preset', 'fast',
-    '-crf', '23', '-pix_fmt', 'yuv420p', '-g', '24', '-movflags', '+faststart',
+    '-c:v', 'libx264', '-preset', 'fast',
+    '-crf', '16', '-pix_fmt', 'yuv420p', '-g', '24', '-movflags', '+faststart',
     str(output / 'tour.mp4')], check=True)
 for name, frame in [('home', 1), ('cabinet', 192), ('bookshelf', 396),
                     ('newspaper', 552), ('laptop', 684)]:
     if frame <= count:
         with Image.open(source / f'Room_{frame:04}.png') as image:
-            image.convert('RGB').save(output / f'{name}.webp', quality=83, method=6)
+            image.convert('RGB').save(output / f'{name}.webp', lossless=True, method=6)

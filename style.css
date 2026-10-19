@@ -7,3 +7,5 @@
 .object:hover i{box-shadow:0 0 0 7px #fff1d96b,0 0 22px 8px #fff0cf70}
 .object:focus-visible i,.object:active i,.object[aria-expanded=true] i{background:#fffdf5;box-shadow:0 0 0 9px #fff1d996,0 0 28px 10px #ffe8ba99}
 .object:hover span,.object:focus-visible span{box-shadow:0 0 18px #fff0cf99,0 4px 12px #59412b18}
+
+#skip-animation{position:absolute;right:16px;bottom:16px;padding:10px 16px;background:#faf5e9ed;border:1px solid #c9bda9;border-radius:4px;font-size:12px;box-shadow:0 3px 14px #43311c15}#skip-animation[hidden]{display:none}#skip-animation:hover{background:#fffaf0}

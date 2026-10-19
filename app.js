@@ -5,9 +5,9 @@ const clips = {cabinet:[121,192,252],bookshelf:[253,396,480],newspaper:[481,552,
 const titles = {cabinet:['MY JOURNEY','學歷與經歷'],bookshelf:['FEATURE STORIES','我的專題報導'],newspaper:['SELECTED REPORTING','我的新聞作品'],laptop:['DIGITAL STORYTELLING','用不同的方式說故事'],notebook:['ABOUT ME','關於我'],violin:['AFTER HOURS','工作之外的我'],phone:['SAY HELLO','保持聯絡']};
 let current = null, busy = false, demoPlaying = false, returnFocus = null, cancelPlayback = () => {};
 const paragraphs = text => text.split(/(?<=。)\s+/).map(p=>`<p>${p}</p>`).join('');
-function setBusy(value) { busy=value; document.body.classList.toggle('busy',value); $('#objects').inert=value; $('#demo').disabled=value&&!demoPlaying; }
+function setBusy(value) { busy=value; document.body.classList.toggle('busy',value); $('#objects').inert=value; $('#demo').disabled=value&&!demoPlaying; $('#skip-animation').hidden=!value||demoPlaying; }
 // One small video contains frames 1–800. Seek only to the clicked object's segment.
-function play(start,end) {
+function play(start,end,message='正在靠近…') {
   return new Promise(resolve=>{
     let timer, poll, frameCallback, done=false, started=false;
     const finish = ok => {
@@ -30,7 +30,7 @@ function play(start,end) {
         poll=setInterval(check,25);
       }).catch(fail);
     }
-    $('#status').textContent='正在靠近…';
+    $('#status').textContent=message;
     timer=setTimeout(fail,20000+(end-start)/24*1000);
     video.addEventListener('error',fail,{once:true});
     video.addEventListener('seeked',begin,{once:true});
@@ -41,26 +41,34 @@ function play(start,end) {
     if(video.readyState>=1)seek();
     else {
       video.addEventListener('loadedmetadata',seek,{once:true});
-      video.preload='auto';video.src='assets/room/tour.mp4';video.load();
+      video.preload='auto';video.src='assets/room/tour.mp4?v=quality-1080-1';video.load();
     }
   });
 }
-function openObject(id,button) {
+async function openObject(id,button) {
   if(busy||dialog.open)return;
-  current=id;returnFocus=button;
-  // 閱讀立即開啟；完整鏡頭留在房間導覽，避免每次點擊等待。
-  room.classList.remove('playing');
-  still.src=`assets/room/${clips[id]?id:'home'}.webp`;
+  current=id;returnFocus=button;setBusy(true);
+  let animated=false;
+  if(clips[id]&&!reducedMotion.matches)animated=await play(clips[id][0],clips[id][1]);
+  if(!animated){
+    room.classList.remove('playing');
+    still.src=`assets/room/${clips[id]?id:'home'}.webp?v=quality-1080-1`;
+  }
   const [label,title]=titles[id];
   dialog.dataset.view=id;
   $('#page').innerHTML=`<p class="eyebrow">${label}</p><h2 id="page-title">${title}</h2>${content(id)}`;
-  dialog.showModal();dialog.scrollTop=0;
+  setBusy(false);dialog.showModal();dialog.scrollTop=0;
   button.setAttribute('aria-expanded','true');
 }
-function closeContent() {
-  dialog.close();video.pause();still.src='assets/room/home.webp';room.classList.remove('playing');
+async function closeContent() {
+  if(busy)return;
+  setBusy(true);dialog.close();
+  if(clips[current]&&!reducedMotion.matches&&room.classList.contains('playing'))
+    await play(clips[current][1],clips[current][2],'正在回到房間…');
+  video.pause();still.src='assets/room/home.webp?v=quality-1080-1';room.classList.remove('playing');setBusy(false);
   returnFocus?.setAttribute('aria-expanded','false');returnFocus?.focus();current=null;
 }
+$('#skip-animation').addEventListener('click',()=>cancelPlayback());
 $('#objects').addEventListener('click',e=>{const b=e.target.closest('[data-object]');if(b)openObject(b.dataset.object,b)});
 $('#close').addEventListener('click',closeContent);
 dialog.addEventListener('cancel',e=>{e.preventDefault();closeContent()});
