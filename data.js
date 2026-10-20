@@ -74,7 +74,7 @@ const portfolio = {
     {id:'body', tab:'體態焦慮', title:'當美被社群媒體形塑　Z世代的體態焦慮與自我追尋',
       url:'https://unews.nccu.edu.tw/unews/social-genz-SPA/', summary:null, role:null, image:null}
   ],
-  // 正式刊登頁逐篇核對；文字與五張本人攝影首圖經使用者確認可重刊，第三方照片維持待授權。
+  // 正式刊登頁逐篇核對；十二篇文字及首圖均由使用者確認可重刊。
   news: [
     {
       "slug": "thenationalpalacemuseum-edutainment-gamebasedchallenge",
@@ -240,9 +240,11 @@ const portfolio = {
         "caption": "「2025萬聖互動詭鬼節」開幕式邀請國小生穿上「LED火柴人」服裝一同玩樂。　圖／許素朱提供",
         "credit": "圖／許素朱提供",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/-halloween-technology-art.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1578,
+        "height": 1172
       }
     },
     {
@@ -306,9 +308,11 @@ const portfolio = {
         "caption": "浸大民主牆出現悼念宏福苑大火的標語，呼籲政府回應公眾對事故責任的歸屬。　圖／浸大學生會提供",
         "credit": "圖／浸大學生會提供",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/wongfukcourtfire-democracywall-studentsunion.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1206,
+        "height": 904
       }
     },
     {
@@ -339,9 +343,11 @@ const portfolio = {
         "caption": "學生高舉看板譴責校方高層為叛徒，批評學校以學生權益換取政府補助。　圖／Naina Srivastava提供",
         "credit": "圖／Naina Srivastava提供",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/trump-utaustin-campact.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 2000,
+        "height": 1333
       }
     },
     {
@@ -370,9 +376,11 @@ const portfolio = {
         "caption": "學生於康大霍利兵工館（Hawley Armory）前的步道以粉筆寫下「康大是戰爭製造廠」，抗議校方與軍火製造商合作進行研究與招募。　圖／取自Instagram @uconn.unchain",
         "credit": "圖／取自Instagram @uconn.unchain",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/armsmanufacturers-studentprotest-uconn.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1728,
+        "height": 1328
       }
     },
     {
@@ -401,9 +409,11 @@ const portfolio = {
         "caption": "學生輪流以擴音器發言，呼籲校方撤回影響校園社群與住宿空間的政策。　圖／沙彥・喬德里（Shayan Choudhry）提供",
         "credit": "圖／沙彥・喬德里（Shayan Choudhry）提供",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/livinglearningcommunity-black-lgbtq.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1336,
+        "height": 1004
       }
     },
     {
@@ -433,9 +443,11 @@ const portfolio = {
         "caption": "在學術廣場設置「旗幟展示」，以白旗象徵未受懲處的性侵案件，提醒師生關注司法落差與倖存者支持議題。 　圖／瑞姆・阿爾沙班（Reem Alshaban）提供",
         "credit": "圖／瑞姆・阿爾沙班（Reem Alshaban）提供",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/-sexualassault-community-weekofaction.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1812,
+        "height": 1354
       }
     },
     {
@@ -464,9 +476,11 @@ const portfolio = {
         "caption": "美國轉折點設立攤位，提出「生理男性是否應參加女子體育競賽」議題，引發學生關注與討論。　圖／取自Instagram @turningpointmemphis",
         "credit": "圖／取自Instagram @turningpointmemphis",
         "position": "第一張正文照片",
-        "localPath": null,
-        "permission": "unconfirmed",
-        "permissionBasis": null
+        "localPath": "assets/news/transgender-sports-controversy.webp",
+        "permission": "confirmed",
+        "permissionBasis": "使用者確認所有新聞照片均已取得重刊授權（2026-10-20）",
+        "width": 1704,
+        "height": 1782
       }
     }
   ],
