@@ -131,6 +131,8 @@ body:has(dialog[open]){overflow:hidden}body:has(dialog[open]) #objects,body:has(
 dialog[data-view=bookshelf]{--reader-paper:#fff;inset:0;margin:0;width:100vw;max-width:none;height:100dvh;max-height:none;border:0;border-radius:0;animation:none;color:#191919}
 dialog[data-view=bookshelf] #close{height:64px;padding:17px max(24px,4vw);margin:0;background:#fff;border:0;font-size:14px}
 dialog[data-view=bookshelf] #close:hover{background:#f6f4f0}
+dialog[data-view=bookshelf] #close:focus-visible{outline:none}
+dialog[data-view=bookshelf] #close:focus-visible span{outline:2px solid #777;outline-offset:5px;border-radius:2px}
 dialog[data-view=bookshelf] #page{padding:20px clamp(24px,6vw,100px) 70px}
 dialog[data-view=bookshelf] #page>.eyebrow,dialog[data-view=bookshelf] #page>h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .feature-essays{max-width:1200px;margin:0 auto;overflow:hidden;padding:10px 0 25px}
