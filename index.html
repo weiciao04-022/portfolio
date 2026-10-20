@@ -8,8 +8,8 @@
   <title>Katy’s Room｜黃暐喬</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/room/home.webp?v=quality-1080-1">
-  <link rel="stylesheet" href="style.css?v=full-montage-1">
-  <link rel="stylesheet" href="content.css?v=photo-index-1">
+  <link rel="stylesheet" href="style.css?v=object-glow-1">
+  <link rel="stylesheet" href="content.css?v=newspaper-1">
 </head>
 <body>
   <a class="brand room-brand" href="./">Katy’s Room<span>黃暐喬的房間</span></a>
@@ -19,6 +19,7 @@
     <div class="room" id="room" aria-label="互動房間，點擊物件探索">
       <img id="still" src="assets/room/home.webp?v=quality-1080-1" alt="陽光灑入房間，桌上放著報紙、筆電與筆記本，矮櫃上有相框，床邊有書架和小提琴。" width="1920" height="1080" fetchpriority="high">
       <video id="tour" muted playsinline preload="none" aria-hidden="true"></video>
+      <img class="room-glow" src="assets/room/object-glow.webp" alt="" aria-hidden="true" width="1920" height="1080" draggable="false">
       <div id="objects">
         <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="cabinet" style="--x:37%;--y:32%" aria-label="打開矮櫃：學歷與經歷"><i></i><span>學歷與經歷</span></button>
         <button class="object" aria-haspopup="dialog" aria-controls="content" aria-expanded="false" data-object="bookshelf" style="--x:90%;--y:29%" aria-label="打開書本：專題報導"><i></i><span>專題報導</span></button>
@@ -34,8 +35,8 @@
   <p id="status" role="status" aria-live="polite"></p>
   <button id="skip-animation" hidden>略過動畫</button>
   <dialog id="content" aria-labelledby="page-title"><button id="close" aria-label="關閉內容，回到房間">回到房間 <span aria-hidden="true">×</span></button><div id="page"></div></dialog>
-  <script src="data.js?v=feature-book-2"></script>
-  <script src="views.js?v=photo-index-1"></script>
+  <script src="data.js?v=newspaper-1"></script>
+  <script src="views.js?v=newspaper-1"></script>
   <script src="app.js?v=frames-1140-1"></script>
 </body>
 </html>

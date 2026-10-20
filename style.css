@@ -4,6 +4,14 @@
 main{position:fixed;inset:0;overflow:auto;scrollbar-width:none;overscroll-behavior:none;background:#ddd5c9}main::-webkit-scrollbar{display:none}main:focus-visible{outline:none}
 .room{position:relative;width:max(100vw,177.777778dvh);height:max(100dvh,56.25vw);isolation:isolate}
 .room>img,.room>video{display:block;width:100%;height:100%;object-fit:contain}.room>video{position:absolute;inset:0;opacity:0}.room.playing>video{opacity:1}
+/* Only the supplied outline pixels breathe; the room and hit areas stay fixed. */
+.room>.room-glow{position:absolute;inset:0;pointer-events:none;user-select:none;opacity:.18;animation:object-breathe 2.5s ease-in-out infinite;will-change:opacity}
+@keyframes object-breathe{0%,100%{opacity:.18}50%{opacity:.9}}
+.room:has(.object:focus-visible)>.room-glow{animation:none;opacity:1}
+.object:focus-visible{outline:none}
+@media(hover:hover){.room:has(.object:hover)>.room-glow{animation:none;opacity:1}}
+.room.playing>.room-glow,.busy .room-glow,body:has(dialog[open]) .room-glow{visibility:hidden;animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.room>.room-glow{animation:none;opacity:.4}}
 .brand{font:italic 25px Georgia,serif;text-decoration:none;white-space:nowrap}.brand span{display:block;font:10px system-ui;letter-spacing:.2em;margin-top:6px}.room-brand{position:fixed;left:30px;top:max(24px,env(safe-area-inset-top));z-index:2;text-shadow:0 1px 10px #fff9}
 .welcome{position:fixed;left:32px;top:110px;z-index:2;pointer-events:none;text-shadow:0 1px 12px #fffe}.welcome>span{font-size:9px;letter-spacing:.25em}.welcome h1{font:500 clamp(20px,2.4vw,36px)/1.65 "Songti TC","Noto Serif TC",serif;margin:14px 0 8px}.welcome em{font-style:normal}.welcome p{font-size:11px;letter-spacing:.08em}
 .room-controls{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:3;display:flex;gap:8px}.room-controls button,#skip-animation{padding:11px 15px;background:#faf5e9e8;border:1px solid #e5d9c7;border-radius:4px;font-size:12px;box-shadow:0 3px 16px #49371a18}.room-controls button:hover,#skip-animation:hover{background:#fffaf0}.room-controls button:disabled{opacity:.5;cursor:default}

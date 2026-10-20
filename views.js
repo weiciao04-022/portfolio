@@ -47,6 +47,7 @@ function featureReader() {
 // Keep the current open/close hooks; page turns need only a short CSS animation.
 function stopFeatureReveal(){dialog.classList.remove('book-ready','book-index-open')}
 function setupFeatureReveal(){
+  if(current==='newspaper')setupNewsReader();
   const book=current==='bookshelf';
   dialog.classList.toggle('book-ready',book);
   dialog.classList.toggle('book-index-open',book);
@@ -62,7 +63,7 @@ function setupFeatureReveal(){
 function content(id) {
   if(id==='bookshelf') return featureReader();
   if(id==='laptop') return `<div class="computer"><div class="screen-bar"><span class="screen-light" aria-hidden="true"></span><span>Katy’s digital workspace</span></div>${projectTabs(portfolio.digital,'screen-page','數位敘事作品')}<div id="project-content">${projectPage(portfolio.digital[0],0,'screen-page')}</div><div class="screen-chin" aria-hidden="true">KATY’S ROOM</div></div>`;
-  if(id==='newspaper') return `<div class="gazette"><div class="masthead"><span>新聞採訪作品</span><p>${missing('刊頭短句')}</p></div><div class="issue-line"><span>政大大學報 / 新聞採訪選集</span><span>${portfolio.news.length} 篇作品</span></div><div class="news-columns">${portfolio.news.map((work,i)=>`<article class="news-story"><p class="story-no">${String(i+1).padStart(2,'0')} / REPORTING</p><h3>${field(work.title,'作品名稱')}</h3><p class="byline">${escapeHTML(work.media)} · ${field(work.date,'發表日期')}</p><p>${field(work.summary,'採訪導言')}</p><p class="byline">角色：${field(work.role,'此篇採訪／編輯分工')}</p>${workLink(work)}</article>`).join('')}</div></div>`;
+  if(id==='newspaper') return newsReader();
   if(id==='phone') return `<div class="contact-note"><span class="letter-mark" aria-hidden="true">K.</span><p>${missing('聯絡短句')}</p>${contactRow('學校 EMAIL','✉',portfolio.contact.email,portfolio.contact.email, 'mailto:')}${contactRow('PHONE','☎',portfolio.contact.phone,portfolio.contact.phoneHref,'tel:')}</div>`;
   if(id==='notebook') return `<div class="about-note"><p class="lead">${escapeHTML(portfolio.about.intro)}</p><h3>核心技能</h3>${skillGroups.map(s=>`<section class="skill"><h4>${escapeHTML(s.title)}</h4><p>${escapeHTML(s.text)}</p></section>`).join('')}<h3>我關注的方向</h3><p>${field(portfolio.about.interests,'想持續關注的議題或創作方向')}</p><details><summary>為什麼想做新聞？</summary>${paragraphs(books.listen.text)}</details></div>`;
   if(id==='violin') return paragraphs(books.life.text);
@@ -83,4 +84,74 @@ function selectProject(tab, focus=false) {
   $('#project-content').innerHTML=book?featureSpread(portfolio.features[index],index):projectPage(portfolio.digital[index],index,'screen-page');
   if(fromIndex)tab.focus({preventScroll:true});
   else if(focus)tab.focus();
+}
+
+// Newspaper navigation stays inside this object; room and project-tab controls are unchanged.
+const newsEditions={life:{name:'LIFE',label:'生活版'},international:{name:'INTERNATIONAL',label:'國際版'}};
+const newsPendingText='待更新／待確認重刊授權';
+function newsOriginalLink(work){
+  return `<a class="read-link" href="${escapeHTML(work.url)}" target="_blank" rel="noopener">閱讀原文 <span aria-hidden="true">↗</span></a>`;
+}
+function newsPhoto(work){
+  const photo=work.photo,allowed=photo.permission==='confirmed'&&provided(photo.localPath);
+  return `<figure class="news-photo">${allowed?`<img src="${escapeHTML(photo.localPath)}" alt="${escapeHTML(provided(photo.caption)?photo.caption:work.title)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">`:
+    `<div class="news-photo-pending"><span>待更新</span><small>${photo.permission==='confirmed'?'照片待提供':'待確認圖片授權'}</small></div>`}
+    <figcaption>${provided(photo.caption)?escapeHTML(photo.caption):`<span>原始圖說：待更新</span><span>${field(photo.credit,'攝影者／圖片來源')}</span>`}</figcaption></figure>`;
+}
+function newsByline(work){
+  return `<div class="news-meta"><time datetime="${escapeHTML(work.date)}">${escapeHTML(work.date)}</time><span>${escapeHTML(work.issue)} · ${escapeHTML(work.publishedSection)}</span><span>${escapeHTML(work.byline)}</span></div>`;
+}
+function newsBrief(work){
+  return work.textPermission==='confirmed'&&provided(work.summary)?`<p class="news-excerpt">${escapeHTML(work.summary)}</p>`:
+    `<p class="news-pending">導言：${newsPendingText}</p>`;
+}
+function newsEdition(edition){
+  const info=newsEditions[edition],works=portfolio.news.filter(work=>work.edition===edition);
+  const story=work=>`<article class="news-story news-${work.rank}" data-news-open="${work.id}">
+      <div class="news-story-label">${work.rank==='lead'?'頭條':work.rank==='secondary'?'次頭條':info.label}</div>
+      <h3><button type="button" class="news-headline" data-news-title="${work.id}">${escapeHTML(work.title)}</button></h3>
+      ${newsByline(work)}${newsPhoto(work)}${newsBrief(work)}${newsOriginalLink(work)}</article>`;
+  return `<div class="news-edition-line"><h4>${info.name}<span>｜${info.label}</span></h4><span>${String(works.length).padStart(2,'0')} 篇作品</span></div>
+    <div class="news-grid">${works.slice(0,2).map(story).join('')}<div class="news-lower-grid">${works.slice(2).map(story).join('')}</div></div>`;
+}
+function newsReader(){
+  return `<section class="gazette" aria-label="新聞採訪作品"><header class="news-masthead"><p>KATY’S ROOM / JOURNALISM</p><h3>新聞採訪作品</h3><p>原始刊登媒體｜《政大大學報》</p></header>
+    <nav class="news-editions" aria-label="新聞版別"><div role="group" aria-label="選擇版別">${Object.entries(newsEditions).map(([id,info])=>`<button type="button" data-news-edition="${id}" aria-pressed="${id==='life'}">${info.name}<span>${info.label}</span></button>`).join('')}</div><span>新聞採訪選集</span></nav>
+    <div class="news-index">${newsEdition('life')}</div><div class="news-reading" hidden></div></section>`;
+}
+function newsArticle(work){
+  const body=work.textPermission==='confirmed'&&Array.isArray(work.body)&&work.body.length
+    ?work.body.map(text=>`<p>${escapeHTML(text)}</p>`).join(''):`<p class="news-pending">${newsPendingText}</p>`;
+  return `<button type="button" class="news-back" data-news-back>← 返回報紙版面</button><article class="news-article">
+    <p class="news-article-section">${newsEditions[work.edition].name}｜${newsEditions[work.edition].label}</p>
+    <h3 id="news-reading-title" tabindex="-1">${escapeHTML(work.title)}</h3>${newsByline(work)}${newsPhoto(work)}
+    <section class="news-article-text" aria-label="新聞原文"><h4>原文導言</h4>${newsBrief(work)}<h4>新聞正文</h4>${body}</section>
+    ${newsOriginalLink(work)}<details class="news-source"><summary>圖片來源與授權</summary><p>${escapeHTML(work.photo.credit||'待更新')}</p><p>圖片：${work.photo.permission==='confirmed'?'已確認使用許可':'待更新／待確認圖片授權'}</p><a href="${escapeHTML(work.url)}" target="_blank" rel="noopener">核對原始圖說與首張正文照片 ↗</a></details></article>`;
+}
+function setupNewsReader(){
+  const root=$('.gazette'),index=root.querySelector('.news-index'),reading=root.querySelector('.news-reading');
+  let edition='life',scrollTop=0,selected=null;
+  const showEdition=id=>{
+    edition=id;index.innerHTML=newsEdition(id);index.hidden=false;reading.hidden=true;reading.innerHTML='';
+    root.querySelectorAll('[data-news-edition]').forEach(button=>button.setAttribute('aria-pressed',button.dataset.newsEdition===id));
+    dialog.scrollTop=0;
+  };
+  root.onclick=event=>{
+    const section=event.target.closest('[data-news-edition]');
+    if(section){showEdition(section.dataset.newsEdition);return}
+    if(event.target.closest('[data-news-back]')){
+      reading.hidden=true;reading.innerHTML='';index.hidden=false;dialog.scrollTop=scrollTop;
+      root.querySelector(`[data-news-title="${selected}"]`)?.focus({preventScroll:true});return;
+    }
+    if(event.target.closest('a'))return;
+    const story=event.target.closest('[data-news-open]');if(!story)return;
+    const work=portfolio.news.find(item=>item.id===story.dataset.newsOpen);if(!work)return;
+    selected=work.id;scrollTop=dialog.scrollTop;index.hidden=true;reading.innerHTML=newsArticle(work);reading.hidden=false;
+    dialog.scrollTop=0;reading.querySelector('h3').focus({preventScroll:true});
+  };
+  root.querySelector('.news-editions').onkeydown=event=>{
+    if(!event.target.closest('[data-news-edition]')||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();const ids=Object.keys(newsEditions),next=event.key==='Home'?ids[0]:event.key==='End'?ids[1]:ids[1-ids.indexOf(edition)];
+    showEdition(next);root.querySelector(`[data-news-edition="${next}"]`).focus({preventScroll:true});
+  };
 }
